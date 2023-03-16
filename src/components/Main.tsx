@@ -1,49 +1,12 @@
-import { useEffect, useState } from 'react'
-import { UserData } from '../App'
 import { PieChart } from 'react-minimal-pie-chart'
+import { CleanUpData } from '../App'
+import ListNames from './ListNames'
 
-interface CleanUpData {
-  name: string
-  value: number
-  color: string
-  key: number
+interface MainProps {
+  data: CleanUpData[]
 }
 
-const Main = () => {
-  const [data, setData] = useState<CleanUpData[]>([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/users')
-      const data = await response.json()
-      cleanUpData(data)
-    }
-
-    fetchData()
-  }, [])
-
-  const randomColor = () => {
-    const hexValues = '0123456789abcdef'
-    let color = '#'
-    for (let i = 0; i < 6; i++) {
-      color += hexValues[Math.floor(Math.random() * hexValues.length)]
-    }
-    return color
-  }
-
-  const cleanUpData = (data: UserData[]) => {
-    const cleanedData: CleanUpData[] = data.map(({ firstName, lastName, progress }, index) => ({
-      name: `${firstName} ${lastName}`,
-      value: progress * 100,
-      color: `${randomColor()}`,
-      key: index,
-    }))
-
-    console.log(cleanedData)
-
-    setData(cleanedData)
-  }
-
+const Main = ({ data }: MainProps) => {
   return (
     <main className="flex flex-col justify-center items-center mt-10">
       <section>
@@ -51,7 +14,7 @@ const Main = () => {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </section>
       <section className="flex justify-center items-center mt-10">
-        <div>
+        <section className="flex gap-8">
           {data.length > 0 && (
             <PieChart
               data={data}
@@ -59,12 +22,16 @@ const Main = () => {
               label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
               labelPosition={70}
               labelStyle={{ fontSize: '8px', fontFamily: 'sans-serif' }}
+              paddingAngle={2}
               animate
               animationDuration={500}
               animationEasing="ease-out"
+              className="w-1/2"
+              totalValue={data.reduce((acc, { value }) => acc + value, 0)}
             />
           )}
-        </div>
+          <ListNames data={data} />
+        </section>
       </section>
     </main>
   )
