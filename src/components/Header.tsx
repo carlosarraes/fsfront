@@ -7,18 +7,22 @@ interface HeaderProps {
     progress: number
   }
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-function Header({ userData, handleChange }: HeaderProps) {
+function Header({ userData, handleChange, handleSubmit }: HeaderProps) {
   const { firstName, lastName, progress } = userData
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log('click')
+  const verifyBtn = () => {
+    if (firstName && lastName && progress > 0) {
+      return false
+    }
+
+    return true
   }
 
   return (
-    <header className="flex justify-center bg-cyan-500 py-10">
+    <header className="flex justify-center bg-cyan-500 py-10 shadow-md">
       <form className="flex gap-6" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -51,7 +55,7 @@ function Header({ userData, handleChange }: HeaderProps) {
         </div>
         <button
           type="submit"
-          disabled
+          disabled={verifyBtn()}
           className="border border-white text-white px-12 rounded-md hover:cursor-pointer duration-150 hover:enabled:bg-white hover:enabled:text-cyan-500 disabled:cursor-not-allowed disabled:text-gray-500 disabled:border-gray-500"
         >
           SEND
