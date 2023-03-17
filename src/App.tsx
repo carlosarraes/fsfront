@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Main from './components/Main'
 import { randomColor } from './utils/randomColor'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export interface UserData {
   firstName: string
@@ -54,16 +56,28 @@ function App() {
 
   const handleDelete = async (str: string) => {
     if (data.length > 1) {
-      const response = await fetch(`http://localhost:8080/user/${str}`, {
-        method: 'DELETE',
-      })
-      const status = await response.json()
+      try {
+        const response = await fetch(`http://localhost:8080/user/${str}`, {
+          method: 'DELETE',
+        })
+        const status = await response.json()
 
-      if (status.message === `User ${str} deleted`) {
-        const newData = data.filter(({ name }) => name.split(' ')[1] !== str)
-        setData(newData)
+        if (status.message === `User ${str} deleted`) {
+          const newData = data.filter(({ name }) => name.split(' ')[1] !== str)
+          setData(newData)
+          toast.success('User deleted successfully')
+        } else {
+          toast.error('Something went wrong.')
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
+  }
+
+  const findHighestKey = () => {
+    const highestKey = data.reduce((acc, curr) => (acc.key > curr.key ? acc : curr))
+    return highestKey.key
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,27 +96,31 @@ function App() {
         }),
       })
 
-      const status = await response.json()
-      if (status.message === 'User created') {
+      const check = await response.json()
+      if (check.message === 'User created') {
         const newData = [
           ...data,
           {
             name: `${firstName} ${lastName}`,
             value: Number(progress),
             color: `${randomColor()}`,
-            key: data.length,
+            key: findHighestKey() + 1,
           },
         ]
-        console.log(newData)
         setUserData({
           firstName: '',
           lastName: '',
           progress: 0,
         })
         setData(newData)
+        toast.success('User created successfully')
+      } else if (check.message.includes('Error creating user')) {
+        toast.error(check.message)
+      } else {
+        toast.error('Something went wrong.')
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -110,6 +128,7 @@ function App() {
     <>
       <Header userData={userData} handleChange={handleChange} handleSubmit={handleSubmit} />
       <Main data={data} handleDelete={handleDelete} />
+      <ToastContainer />
     </>
   )
 }
