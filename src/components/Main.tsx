@@ -22,7 +22,7 @@ const Main = ({ data, handleDelete }: MainProps) => {
             {data.length > 0 && (
               <PieChart
                 data={data}
-                lineWidth={60}
+                lineWidth={50}
                 label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
                 labelPosition={70}
                 labelStyle={{ fontSize: '8px', fontFamily: 'sans-serif' }}
