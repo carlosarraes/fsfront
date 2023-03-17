@@ -28,7 +28,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/users')
+      const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/users')
       const data = await response.json()
       const cleanedData = cleanUpData(data)
 
@@ -57,7 +57,7 @@ function App() {
   const handleDelete = async (str: string) => {
     if (data.length > 1) {
       try {
-        const response = await fetch(`http://localhost:8080/user/${str}`, {
+        const response = await fetch(`https://gofs-4wgfen3n5q-rj.a.run.app/user/${str}`, {
           method: 'DELETE',
         })
         const status = await response.json()
@@ -84,7 +84,7 @@ function App() {
     const { firstName, lastName, progress } = userData
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:8080/user', {
+      const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
