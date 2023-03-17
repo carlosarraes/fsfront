@@ -5,9 +5,10 @@ import Table from './Table'
 
 interface MainProps {
   data: CleanUpData[]
+  handleDelete: (lastName: string) => void
 }
 
-const Main = ({ data }: MainProps) => {
+const Main = ({ data, handleDelete }: MainProps) => {
   return (
     <main className="flex flex-col justify-center items-center mt-10">
       <section>
@@ -16,7 +17,7 @@ const Main = ({ data }: MainProps) => {
       </section>
       <section className="flex justify-center items-center mt-10">
         <section className="flex gap-8">
-          <Table data={data} />
+          <Table data={data} handleDelete={handleDelete} />
           <div className="flex gap-8">
             {data.length > 0 && (
               <PieChart

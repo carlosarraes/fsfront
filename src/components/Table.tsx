@@ -3,9 +3,10 @@ import { CleanUpData } from '../App'
 
 interface TableProps {
   data: CleanUpData[]
+  handleDelete: (lastName: string) => void
 }
 
-const Table = ({ data }: TableProps) => {
+const Table = ({ data, handleDelete }: TableProps) => {
   const sortedData = data.sort((a, b) => a.value - b.value)
 
   return (
@@ -28,7 +29,10 @@ const Table = ({ data }: TableProps) => {
               <td>{name.split(' ')[1]}</td>
               <td className="text-center">{value}%</td>
               <td>
-                <AiOutlineUserDelete className="mx-auto text-xl text-red-500 cursor-pointer" />
+                <AiOutlineUserDelete
+                  className="mx-auto text-xl text-red-500 cursor-pointer"
+                  onClick={() => handleDelete(name.split(' ')[1])}
+                />
               </td>
             </tr>
           ))}
