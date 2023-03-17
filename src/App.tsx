@@ -28,7 +28,9 @@ function App() {
     const fetchData = async () => {
       const response = await fetch('http://localhost:8080/users')
       const data = await response.json()
-      cleanUpData(data)
+      const cleanedData = cleanUpData(data)
+
+      setData(cleanedData)
     }
 
     fetchData()
@@ -42,7 +44,7 @@ function App() {
       key: index,
     }))
 
-    setData(cleanedData)
+    return cleanedData
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,10 +52,64 @@ function App() {
     setUserData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleDelete = async (str: string) => {
+    if (data.length > 1) {
+      const response = await fetch(`http://localhost:8080/user/${str}`, {
+        method: 'DELETE',
+      })
+      const status = await response.json()
+
+      if (status.message === `User ${str} deleted`) {
+        const newData = data.filter(({ name }) => name.split(' ')[1] !== str)
+        setData(newData)
+      }
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const { firstName, lastName, progress } = userData
+    e.preventDefault()
+    try {
+      const response = await fetch('http://localhost:8080/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          progress: progress / 100,
+        }),
+      })
+
+      const status = await response.json()
+      if (status.message === 'User created') {
+        const newData = [
+          ...data,
+          {
+            name: `${firstName} ${lastName}`,
+            value: Number(progress),
+            color: `${randomColor()}`,
+            key: data.length,
+          },
+        ]
+        console.log(newData)
+        setUserData({
+          firstName: '',
+          lastName: '',
+          progress: 0,
+        })
+        setData(newData)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <>
-      <Header userData={userData} handleChange={handleChange} />
-      <Main data={data} />
+      <Header userData={userData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Main data={data} handleDelete={handleDelete} />
     </>
   )
 }
