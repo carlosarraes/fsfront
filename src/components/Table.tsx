@@ -31,6 +31,7 @@ const Table = ({ data, handleDelete }: TableProps) => {
               <td>
                 <AiOutlineUserDelete
                   className="mx-auto text-xl text-red-500 cursor-pointer"
+                  aria-label={`delete-${name.split(' ')[1]}`}
                   onClick={() => handleDelete(name.split(' ')[1])}
                 />
               </td>

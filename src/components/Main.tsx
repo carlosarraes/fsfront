@@ -18,7 +18,7 @@ const Main = ({ data, handleDelete }: MainProps) => {
       <section className="flex justify-center items-center mt-10">
         <section className="flex gap-8">
           <Table data={data} handleDelete={handleDelete} />
-          <div className="flex gap-8">
+          <div className="flex gap-8" data-testid="pie-chart">
             {data.length > 0 && (
               <PieChart
                 data={data}
