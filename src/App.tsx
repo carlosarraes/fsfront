@@ -28,11 +28,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/users')
-      const data = await response.json()
-      const cleanedData = cleanUpData(data)
+      try {
+        const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/users')
+        const data = await response.json()
+        const cleanedData = cleanUpData(data)
 
-      setData(cleanedData)
+        setData(cleanedData)
+      } catch (error) {
+        console.log(error)
+      }
     }
 
     fetchData()
