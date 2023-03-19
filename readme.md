@@ -12,4 +12,8 @@ The backend part of FS Data was created in Golang, with a Dockerfile created for
 
 ## Tests
 
-No information is available about test cases for this project.
+Tests done with Vitest/MSW/Coverage-C8
+
+[Coverage](./img.png)
+
+Missing branch are erros that are handled by the server.
