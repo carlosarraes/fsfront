@@ -18,7 +18,7 @@ const Footer = () => {
             <span className="self-center"> | </span>
           </div>
           <a
-            href="https://github.com/carlosarraes/favcrypto"
+            href="https://github.com/carlosarraes/fsfront"
             target="_blank"
             rel="noreferrer"
             className="text-center flex gap-2 hover:underline"
