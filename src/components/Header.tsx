@@ -23,7 +23,7 @@ function Header({ userData, handleChange, handleSubmit }: HeaderProps) {
 
   return (
     <header className="flex justify-center bg-cyan-500 py-10 shadow-md">
-      <form className="flex gap-6" onSubmit={handleSubmit}>
+      <form className="flex flex-col sm:flex-wrap sm:flex-row justify-center gap-6" onSubmit={handleSubmit}>
         <input
           type="text"
           name="firstName"
@@ -56,7 +56,7 @@ function Header({ userData, handleChange, handleSubmit }: HeaderProps) {
         <button
           type="submit"
           disabled={verifyBtn()}
-          className="border border-white text-white px-12 rounded-md hover:cursor-pointer duration-150 hover:enabled:bg-white hover:enabled:text-cyan-500 disabled:cursor-not-allowed disabled:text-gray-500 disabled:border-gray-500"
+          className="border border-white text-white px-12 py-2 rounded-md hover:cursor-pointer duration-150 hover:enabled:bg-white hover:enabled:text-cyan-500 disabled:cursor-not-allowed disabled:text-gray-500 disabled:border-gray-500"
         >
           SEND
         </button>

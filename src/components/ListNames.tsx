@@ -6,7 +6,7 @@ interface ListNamesProps {
 
 const ListNames = ({ data }: ListNamesProps) => {
   return (
-    <ul className="flex flex-col gap-2 w-1/2">
+    <ul className="flex flex-col gap-2 w-10/12 mx-auto sm:w-1/2">
       {data.map(({ name, color, key }) => (
         <div key={key} className="flex h-full gap-2">
           <div className="w-6 h-6 self-center rounded-md" style={{ backgroundColor: color }} />

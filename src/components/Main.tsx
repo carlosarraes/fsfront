@@ -13,12 +13,12 @@ const Main = ({ data, handleDelete }: MainProps) => {
     <main className="flex flex-col justify-center items-center mt-10">
       <section>
         <h1 className="text-3xl text-center">DATA</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p className='hidden sm:block'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </section>
       <section className="flex justify-center items-center mt-10">
-        <section className="flex gap-8">
+        <section className="flex flex-col md:flex-row gap-8">
           <Table data={data} handleDelete={handleDelete} />
-          <div className="flex gap-8" data-testid="pie-chart">
+          <div className="flex flex-col justify-center items-center sm:flex-row gap-8" data-testid="pie-chart">
             {data.length > 0 && (
               <PieChart
                 data={data}
@@ -30,7 +30,7 @@ const Main = ({ data, handleDelete }: MainProps) => {
                 animate
                 animationDuration={500}
                 animationEasing="ease-out"
-                className="w-1/2"
+                className="w-10/12 mx-auto sm:w-1/2"
                 totalValue={data.reduce((acc, { value }) => acc + value, 0)}
               />
             )}

@@ -4,6 +4,7 @@ import Main from './components/Main'
 import { randomColor } from './utils/randomColor'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from './components/Footer'
 
 export interface UserData {
   firstName: string
@@ -87,6 +88,15 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const { firstName, lastName, progress } = userData
     e.preventDefault()
+
+    const actualSum = data.reduce((acc, curr) => acc + curr.value, 0)
+    const totalSum = actualSum + Number(progress)
+
+    if (totalSum > 100) {
+      toast.error('Total progress cannot be more than 100%')
+      return
+    }
+
     try {
       const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/user', {
         method: 'POST',
@@ -132,6 +142,7 @@ function App() {
     <>
       <Header userData={userData} handleChange={handleChange} handleSubmit={handleSubmit} />
       <Main data={data} handleDelete={handleDelete} />
+      <Footer />
       <ToastContainer />
     </>
   )
