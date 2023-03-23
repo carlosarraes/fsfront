@@ -23,7 +23,7 @@ export const handlers = [
   rest.post(`${url}/user`, (req, res, ctx) => {
     const { firstName, lastName, progress } = req.body as UserData
     const sum = employees.reduce((acc, curr) => acc + curr.progress, 0)
-    if (sum + progress > 1) {
+    if (sum + progress! > 1) {
       return res(
         ctx.status(400),
         ctx.json({
@@ -31,7 +31,11 @@ export const handlers = [
         }),
       )
     }
-    employees.push({ firstName, lastName, progress })
+    
+    if (progress) {
+      employees.push({ firstName, lastName, progress })
+    }
+
     return res(ctx.status(200), ctx.json({ message: 'User created' }))
   }),
   rest.delete(`${url}/user/:id`, (_, res, ctx) => {
