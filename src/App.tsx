@@ -77,6 +77,8 @@ function App() {
       } catch (error) {
         console.log(error)
       }
+    } else {
+      toast.error('Cannot delete all users')
     }
   }
 
