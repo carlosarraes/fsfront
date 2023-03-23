@@ -4,7 +4,7 @@ interface HeaderProps {
   userData: {
     firstName: string
     lastName: string
-    progress: number
+    progress?: number
   }
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
@@ -14,7 +14,7 @@ function Header({ userData, handleChange, handleSubmit }: HeaderProps) {
   const { firstName, lastName, progress } = userData
 
   const verifyBtn = () => {
-    if (firstName && lastName && progress > 0) {
+    if (firstName && lastName && progress! > 0) {
       return false
     }
 

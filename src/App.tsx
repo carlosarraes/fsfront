@@ -9,7 +9,7 @@ import Footer from './components/Footer'
 export interface UserData {
   firstName: string
   lastName: string
-  progress: number
+  progress?: number
 }
 
 export interface CleanUpData {
@@ -23,7 +23,7 @@ function App() {
   const [userData, setUserData] = useState<UserData>({
     firstName: '',
     lastName: '',
-    progress: 0,
+    progress: undefined,
   })
   const [data, setData] = useState<CleanUpData[]>([])
 
@@ -46,7 +46,7 @@ function App() {
   const cleanUpData = (data: UserData[]) => {
     const cleanedData: CleanUpData[] = data.map(({ firstName, lastName, progress }, index) => ({
       name: `${firstName} ${lastName}`,
-      value: progress * 100,
+      value: progress! * 100,
       color: `${randomColor()}`,
       key: index,
     }))
@@ -99,6 +99,11 @@ function App() {
       return
     }
 
+    if (firstName === '' || lastName === '' || progress === null) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
     try {
       const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/user', {
         method: 'POST',
@@ -108,7 +113,7 @@ function App() {
         body: JSON.stringify({
           firstName,
           lastName,
-          progress: progress / 100,
+          progress: progress! / 100,
         }),
       })
 
