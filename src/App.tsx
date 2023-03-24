@@ -97,7 +97,7 @@ function App() {
     const totalSum = actualSum + Number(progress)
 
     if (totalSum > 100) {
-      toast.error('Total progress cannot be more than 100%')
+      toast.error('Total progress (including existing data) cannot exceed 100%.')
       return
     }
 
