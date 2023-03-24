@@ -152,7 +152,7 @@ function App() {
       <Header userData={userData} handleChange={handleChange} handleSubmit={handleSubmit} />
       <Main data={data} handleDelete={handleDelete} />
       <Footer />
-      <ToastContainer />
+      <ToastContainer className="mt-72 sm:mt-32" position="top-center" />
     </>
   )
 }
