@@ -19,6 +19,8 @@ export interface CleanUpData {
   key: number
 }
 
+const URL = 'https://gofsu-4wgfen3n5q-rj.a.run.app'
+
 function App() {
   const [userData, setUserData] = useState<UserData>({
     firstName: '',
@@ -30,7 +32,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/users')
+        const response = await fetch(URL + '/users')
         const data = await response.json()
         const cleanedData = cleanUpData(data)
 
@@ -62,7 +64,7 @@ function App() {
   const handleDelete = async (str: string) => {
     if (data.length > 1) {
       try {
-        const response = await fetch(`https://gofs-4wgfen3n5q-rj.a.run.app/user/${str}`, {
+        const response = await fetch(`${URL}/${str}`, {
           method: 'DELETE',
         })
         const status = await response.json()
@@ -105,7 +107,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('https://gofs-4wgfen3n5q-rj.a.run.app/user', {
+      const response = await fetch(URL + '/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

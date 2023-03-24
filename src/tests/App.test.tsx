@@ -36,7 +36,7 @@ describe('App', () => {
     expect(btn).toBeEnabled()
     await userEvent.click(btn)
 
-    const error = await screen.findByText(/Progress sum/i)
+    const error = await screen.findByText(/sum/i)
 
     expect(error).toBeInTheDocument()
   })

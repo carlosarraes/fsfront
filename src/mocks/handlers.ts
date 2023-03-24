@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import { UserData } from '../App'
 
-const url = 'https://gofs-4wgfen3n5q-rj.a.run.app'
+const url = 'https://gofsu-4wgfen3n5q-rj.a.run.app'
 
 let employees = [
   {
