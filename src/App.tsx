@@ -64,7 +64,7 @@ function App() {
   const handleDelete = async (str: string) => {
     if (data.length > 1) {
       try {
-        const response = await fetch(`${URL}/${str}`, {
+        const response = await fetch(`${URL}/user/${str}`, {
           method: 'DELETE',
         })
         const status = await response.json()
